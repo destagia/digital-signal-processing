@@ -30,6 +30,9 @@ object Main {
 		val list3 = sc.fadeOut(sc.makeEffectWave(0.2, 0.6, 880, 440))
 		sc.makeFile("effect.raw", list3)
 
+		val list4 = sc.foldCalc(list3)
+		sc.makeFile("fold.raw", list4)
+
 	}
 }
 

@@ -48,6 +48,32 @@ class SoundCreater(
 		}).toList
 	}
 
+	def readBinary(fileName:String):List[Float] = {
+		val inputFile = new File(fileName)	
+		val fis = new FileInputStream(inputFile)
+		val dis = new DataInputStream(fis)
+
+		(for (i <- (0 to listLength.toInt-1)) yield {
+			dis.readFloat()
+		}).toList
+	}
+
+	def foldCalc (x:List[Short]) = {
+		val h = readBinary("impulse_16khz.dat")
+
+		val y = x.map { value =>
+			val n = x.indexOf(value)
+			println(n)
+			(for (k <- (0 to n)) yield {
+				x(k) * h(n-k)
+			}).toList
+		}
+
+		y.map { list =>
+			list.reduceLeft(_ + _)
+		} .map(_.toShort)
+	}
+
 	def makeEffectWave (start:Double, end:Double, maxFreq:Double, minFreq:Double) = {
 		val fList = makeSound((A, f0, samp_freq, n) => {
 			val length0 = samp_freq * start
