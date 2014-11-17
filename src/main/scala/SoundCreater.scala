@@ -48,4 +48,48 @@ class SoundCreater(
 		}).toList
 	}
 
+	def makeEffectWave (start:Double, end:Double, maxFreq:Double, minFreq:Double) = {
+		val fList = makeSound((A, f0, samp_freq, n) => {
+			val length0 = samp_freq * start
+			val length = samp_freq * end
+
+			if (n < length0) {
+				minFreq.toShort
+			} else {
+				val m = n - length0
+				(m * (maxFreq - minFreq) / (length - length0) + minFreq).toShort
+			}
+		})
+
+		def makeWave(f0:Double, n:Int):List[Short] = {
+			val t0n = 1.0 / f0
+			val maxN = (t0n * samp_freq).toInt
+			val nextf = fList(
+				if (n + maxN < listLength) { (n + maxN).toInt } 
+				else { (listLength-1).toInt })
+
+			val list = 
+			(for (m <- (0 to maxN)) yield {
+				if (0 <= m && m < (t0n * samp_freq)/2.0) {
+					A
+				} else if ((t0n * samp_freq)/2.0 <= m && m < t0n * samp_freq) {
+					-A
+				} else {
+					0
+				}
+			}).toList.map(_.toShort)
+			val addList = 
+				if (n < listLength) makeWave(nextf, n + maxN) 
+				else List[Short]()
+			list ++ addList
+		}
+		makeWave(fList.head, 0)
+	}
+
+	def fadeOut(list:List[Short]) = {
+		(for (i <- (0 to list.size-1)) yield {
+			(-(1.0 / (list.size-1).toDouble) * i.toDouble + 1.0)* list(i)
+		}).toList.map(_.toShort)
+	}
+
 }
