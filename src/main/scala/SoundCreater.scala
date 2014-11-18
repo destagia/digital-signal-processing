@@ -30,7 +30,7 @@ class SoundCreater(
 
 	def makeFile (name:String, list:List[Short]) {
 		// ファイル書き込みオブジェクトを作成
-		val outputFile = new File(name)
+		val outputFile = new File("resources/" + name)
 		val fos = new FileOutputStream(outputFile)
 		val dos = new DataOutputStream(fos)
 
@@ -59,7 +59,7 @@ class SoundCreater(
 	}
 
 	def readImpulse() = {
-		val file = new File("impulse.dat")
+		val file = new File("resources/impulse.dat")
 		val fr = new FileReader(file)		
 		val br = new BufferedReader(fr)
 
@@ -69,7 +69,7 @@ class SoundCreater(
 			if (str == null) {
 				res
 			} else {
-				read(br0, List(str.toFloat) ++ res)
+				read(br0, res ++ List(str.toFloat))
 			}
 		}
 
@@ -87,11 +87,11 @@ class SoundCreater(
 				}
 			}
 
-			if (res.size == x.size) {
+			if (x.isEmpty || h.isEmpty) {
 				res
 			} else {
 				val hr = h.reverse
-				makeList(x, List(h.last) ++ h.init, List(calc(x,hr,0)) ++ res)
+				makeList(x, h.init, List(calc(x,hr,0)) ++ res)
 			}
 		}
 		makeList(list, h, Nil)
