@@ -58,20 +58,43 @@ class SoundCreater(
 		}).toList
 	}
 
-	def foldCalc (x:List[Short]) = {
-		val h = readBinary("impulse_16khz.dat")
+	def readImpulse() = {
+		val file = new File("impulse.dat")
+		val fr = new FileReader(file)		
+		val br = new BufferedReader(fr)
 
-		val y = x.map { value =>
-			val n = x.indexOf(value)
-			println(n)
-			(for (k <- (0 to n)) yield {
-				x(k) * h(n-k)
-			}).toList
+		def read(br0:BufferedReader, res:List[Float]):List[Float] = {
+			val str = br0.readLine()
+
+			if (str == null) {
+				res
+			} else {
+				read(br0, List(str.toFloat) ++ res)
+			}
 		}
 
-		y.map { list =>
-			list.reduceLeft(_ + _)
-		} .map(_.toShort)
+		read(br, Nil)
+	}
+
+
+	def foldCalc (list:List[Float], h:List[Float]) = {
+		def makeList(x:List[Float], h:List[Float], res:List[Float]):List[Float] = {
+			def calc (x0:List[Float], h0:List[Float], res1:Float):Float = {
+				if (x0.isEmpty || h0.isEmpty) {
+					res1
+				} else {
+					calc (x0.tail, h0.tail, (res1 + (x0.head * h0.head)).toShort)
+				}
+			}
+
+			if (res.size == x.size) {
+				res
+			} else {
+				val hr = h.reverse
+				makeList(x, List(h.last) ++ h.init, List(calc(x,hr,0)) ++ res)
+			}
+		}
+		makeList(list, h, Nil)
 	}
 
 	def makeEffectWave (start:Double, end:Double, maxFreq:Double, minFreq:Double) = {

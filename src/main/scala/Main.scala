@@ -27,19 +27,12 @@ object Main {
 		})
 		sc.makeFile("kukeiha.raw", list2)
 
-		val list3 = sc.fadeOut(sc.makeEffectWave(0.2, 0.6, 880, 440))
-		sc.makeFile("effect.raw", list3)
+		val list3 = sc.makeEffectWave(0.2, 0.6, 880, 440)
+		val list5 = sc.fadeOut(list3)
+		sc.makeFile("effect.raw", list5)
 
-		val list4 = sc.foldCalc(list3)
-		sc.makeFile("fold.raw", list4)
+		val list4 = sc.foldCalc(list5.map(_.toFloat), sc.readImpulse())
+		sc.makeFile("fold.raw", list4.map(_.toShort))
 
 	}
 }
-
-
-
-
-
-
-
-
