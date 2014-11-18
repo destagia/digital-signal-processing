@@ -80,19 +80,12 @@ class SoundCreater(
 	def foldCalc (list:List[Float], h:List[Float]) = {
 		def makeList(x:List[Float], h:List[Float], res:List[Float]):List[Float] = {
 			def calc (x0:List[Float], h0:List[Float], res1:Float):Float = {
-				if (x0.isEmpty || h0.isEmpty) {
-					res1
-				} else {
-					calc (x0.tail, h0.tail, (res1 + (x0.head * h0.head)).toShort)
-				}
+				if (x0.isEmpty || h0.isEmpty) res1
+				else calc (x0.tail, h0.tail, (res1 + (x0.head * h0.head)).toShort)
 			}
 
-			if (x.isEmpty || h.isEmpty) {
-				res
-			} else {
-				val hr = h.reverse
-				makeList(x, h.init, List(calc(x,hr,0)) ++ res)
-			}
+			if (x.isEmpty || h.isEmpty) res
+			else makeList(x, h.init, List(calc(x,h.reverse,0)) ++ res)
 		}
 		makeList(list, h, Nil)
 	}
