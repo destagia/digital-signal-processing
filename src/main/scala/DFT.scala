@@ -14,6 +14,10 @@ case class inum(re:Float, im:Float) {
 	def +(that:inum):inum = {
 		inum(this.re + that.re, this.im + that.im)
 	}
+
+	override def toString() = {
+		"imargin number (Re: " + re + ", Im: " + im + ")" 
+	}
 }
 
 object DFT {
@@ -23,14 +27,14 @@ object DFT {
 		inum(cos(N).toFloat,sin(N).toFloat)
 	}
 
-	def tranform (x:List[inum]):List[inum] = {
+	def transform (x:List[inum]):List[inum] = {
 		val N = x.size
-		def tranformIn(n:Int, res:List[inum]):List[inum] = {
+		def transformIn(n:Int, res:List[inum]):List[inum] = {
 			def calc (x1:List[inum], m:Int, res1:inum):inum = {
 				if (x1.isEmpty) {
 					res1
 				} else {
-					val value = x1.head * expj(-n * (2.0*Pi/N.toDouble) * m.toDouble)
+					val value = x1.head * expj(-n.toFloat * (2.0*Pi/N.toDouble) * m.toDouble)
 					calc(x1.tail, m+1, res1 + value)
 				}
 			}
@@ -38,15 +42,31 @@ object DFT {
 			if (n >= N) {
 				res
 			} else {
-				tranformIn(n+1, res ++ List(calc(x, 0, inum(0, 0))))
+				transformIn(n+1, res ++ List(calc(x, 0, inum(0, 0))))
 			}
 		}
-		tranformIn(0, Nil)
+		transformIn(0, Nil)
 	}
 
-	def retranform = {
+	def retransform (X:List[inum]):List[inum] = {
+		val N = X.size.toDouble
+		def retransIn(n:Int, res:List[inum]):List[inum] = {
+			def calc(x1:List[inum], m:Int, res1:inum):inum = {
+				if (x1.isEmpty) {
+					res1
+				} else {
+					val value = x1.head * expj(n.toDouble * (2.0 * Pi / N) * m.toDouble)
+					calc(x1.tail, m+1, res1 + value)
+				}
+			}
 
+			if (n >= N) {
+				res
+			} else {
+				retransIn(n+1, res ++ List(calc(X, 0, inum(0,0))))
+			}
+		}
+		retransIn(0, Nil)
 	}
-
 
 }

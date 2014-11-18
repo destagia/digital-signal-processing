@@ -37,12 +37,17 @@ object Main {
 
 		val soundCreater = new SoundCreater(44100, 0.5, 6000, 500)
 		val effect = soundCreater.fadeOut(soundCreater.makeEffectWave(0.2, 0.5, 880, 440))
-
+		soundCreater.makeFile("effect44.raw", effect)
 		val numList = effect.map { a =>
 			inum(a.toFloat, 0.0f)
 		}
 
-		val list = DFT.tranform(numList)
-		list.map(println(_))
+		val list = DFT.retransform( DFT.transform(numList) ).map { i =>
+			println(i)
+			i.re.toShort
+		}
+
+		soundCreater.makeFile("effectdft", list)
+
 	}
 }
