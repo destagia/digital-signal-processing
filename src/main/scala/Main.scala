@@ -5,7 +5,7 @@ import scala.math._
 object Main {
 
 	def main (args:Array[String]) {
-
+		/*
 		val sc = new SoundCreater(16000,0.6,6000,500)
 
 		val list1 = sc.makeSound((A, f0, samp_freq, n) => {
@@ -33,6 +33,16 @@ object Main {
 
 		val list4 = sc.foldCalc(list5.map(_.toFloat), sc.readImpulse())
 		sc.makeFile("fold.raw", list4.map(_.toShort))
+		*/
 
+		val soundCreater = new SoundCreater(44100, 0.5, 6000, 500)
+		val effect = soundCreater.fadeOut(soundCreater.makeEffectWave(0.2, 0.5, 880, 440))
+
+		val numList = effect.map { a =>
+			inum(a.toFloat, 0.0f)
+		}
+
+		val list = DFT.tranform(numList)
+		list.map(println(_))
 	}
 }
