@@ -1,4 +1,4 @@
-package util
+package jp.kobe.util
 
 import scala.math._
 
@@ -42,12 +42,17 @@ object Main {
 			inum(a.toFloat, 0.0f)
 		}
 
-		val list = DFT.retransform( DFT.transform(numList) ).map { i =>
-			println(i)
-			i.re.toShort
-		}
+		val impulse = soundCreater.readFile("resources/impulse44.dat")
+		val M = numList.size + impulse.size - 1
+		val X = DFT.transform(numList,M)
+		// val x = DFT.retransform(X, M)
+		// x.map(println(_))
+		val H = DFT.transform(impulse.map(a => inum(a, 0)),M)
+		// println(X.size + ", " + H.size)
+		val Y = DFT.multiple(X, H)
+		val y = DFT.retransform(Y,M)
 
-		soundCreater.makeFile("effectdft", list)
+		soundCreater.makeFile("effect_with_dft.raw", y.map(a => a.re.toShort))
 
 	}
 }
