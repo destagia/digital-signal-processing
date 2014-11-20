@@ -36,19 +36,18 @@ object Main {
 		*/
 
 		val soundCreater = new SoundCreater(44100, 0.5, 6000, 500)
+		
 		val effect = soundCreater.fadeOut(soundCreater.makeEffectWave(0.2, 0.5, 880, 440))
-		soundCreater.makeFile("effect44.raw", effect)
 		val numList = effect.map { a =>
 			inum(a.toFloat, 0.0f)
 		}
 
 		val impulse = soundCreater.readFile("resources/impulse44.dat")
+		
 		val M = numList.size + impulse.size - 1
+		
 		val X = DFT.transform(numList,M)
-		// val x = DFT.retransform(X, M)
-		// x.map(println(_))
 		val H = DFT.transform(impulse.map(a => inum(a, 0)),M)
-		// println(X.size + ", " + H.size)
 		val Y = DFT.multiple(X, H)
 		val y = DFT.retransform(Y,M)
 
