@@ -1,9 +1,9 @@
-package util
+package jp.kobe.util
 import java.io._
 import scala.math._
 import java.lang.Long
 
-class SoundCreater( 
+class SoundCreater(
 	val samp_freq:Double, // サンプリング周波数
 	val time:Double, // 音声の時間
 	val A:Double, // 振幅
@@ -17,7 +17,7 @@ class SoundCreater(
 	// おそらく，unsigedとかが絡んでるけど，よくわからんからごり押し。
 	def fetch (s:Short) = {
 		val strTemp = "%04x".format(s)
-		val str = 
+		val str =
 			if (strTemp.length() != 4) {
 				strTemp.replace("ffff", "")
 			} else {
@@ -39,9 +39,9 @@ class SoundCreater(
 		})
 
 		dos.close()
-	} 
+	}
 
-	def makeSound(function:(Double,Double,Double,Double) => Double):List[Short] = { 
+	def makeSound(function:(Double,Double,Double,Double) => Double):List[Short] = {
 		(for (i <- (0 to listLength.toInt-1)) yield {
 			val n = i.toDouble
 			function(A, f0, samp_freq, n).toShort
@@ -49,7 +49,7 @@ class SoundCreater(
 	}
 
 	def readBinary(fileName:String):List[Float] = {
-		val inputFile = new File(fileName)	
+		val inputFile = new File(fileName)
 		val fis = new FileInputStream(inputFile)
 		val dis = new DataInputStream(fis)
 
@@ -58,9 +58,9 @@ class SoundCreater(
 		}).toList
 	}
 
-	def readImpulse() = {
-		val file = new File("resources/impulse.dat")
-		val fr = new FileReader(file)		
+	def readFile(fileName:String) = {
+		val file = new File(fileName)
+		val fr = new FileReader(file)
 		val br = new BufferedReader(fr)
 
 		def read(br0:BufferedReader, res:List[Float]):List[Float] = {
@@ -107,10 +107,10 @@ class SoundCreater(
 			val t0n = 1.0 / f0
 			val maxN = (t0n * samp_freq).toInt
 			val nextf = fList(
-				if (n + maxN < listLength) { (n + maxN).toInt } 
+				if (n + maxN < listLength) { (n + maxN).toInt }
 				else { (listLength-1).toInt })
 
-			val list = 
+			val list =
 			(for (m <- (0 to maxN)) yield {
 				if (0 <= m && m < (t0n * samp_freq)/2.0) {
 					A
@@ -120,8 +120,8 @@ class SoundCreater(
 					0
 				}
 			}).toList.map(_.toShort)
-			val addList = 
-				if (n < listLength) makeWave(nextf, n + maxN) 
+			val addList =
+				if (n < listLength) makeWave(nextf, n + maxN)
 				else List[Short]()
 			list ++ addList
 		}
