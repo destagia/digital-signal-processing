@@ -1,0 +1,644 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"padd",
+				"left_padding"
+			],
+			[
+				"menu",
+				"menu_frame"
+			],
+			[
+				"make",
+				"makeMenuOutFunc"
+			],
+			[
+				"li",
+				"liarray"
+			],
+			[
+				"m",
+				"makeMenuOverFunc"
+			],
+			[
+				"paddi",
+				"padding"
+			],
+			[
+				"mari",
+				"margin-right"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"anim",
+				"anim_time"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"lis",
+				"list_num"
+			],
+			[
+				"left",
+				"left_padding"
+			],
+			[
+				"list",
+				"list_width"
+			],
+			[
+				"border-bottom",
+				"border-bottom-width"
+			],
+			[
+				"border-bo",
+				"border-bottom-color"
+			],
+			[
+				"Twi",
+				"TwitterFactory	"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"marign",
+				"margin-left"
+			],
+			[
+				"paddin",
+				"padding-left"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"bor-left",
+				"border-left-width"
+			],
+			[
+				"border-le",
+				"border-left-style"
+			],
+			[
+				"bords",
+				"border-style"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"bord",
+				"border-width"
+			],
+			[
+				"border",
+				"border-color"
+			],
+			[
+				"border-style",
+				"border-bottom-style"
+			],
+			[
+				"bor",
+				"border-style"
+			],
+			[
+				"si",
+				"font-size"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"backgroundc",
+				"background-color"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"al",
+				"text-align"
+			],
+			[
+				"Basic",
+				"BasicDBObject	"
+			],
+			[
+				"find",
+				"findOne	(DBObject)"
+			],
+			[
+				"findO",
+				"findOne	(DBObject)"
+			],
+			[
+				"toA",
+				"toArray	()"
+			],
+			[
+				"border-s",
+				"border-style"
+			],
+			[
+				"border-co",
+				"border-color"
+			],
+			[
+				"border-",
+				"border-width"
+			],
+			[
+				"marig",
+				"margin-right"
+			],
+			[
+				"form",
+				"bindFromRequest	(Map[String, Seq[String]])"
+			],
+			[
+				"bind",
+				"bindform	bindform"
+			],
+			[
+				"Cont",
+				"Controller	"
+			],
+			[
+				"chara",
+				"characterList	"
+			],
+			[
+				"id",
+				"id"
+			],
+			[
+				"print",
+				"println	(Any)"
+			],
+			[
+				"retra",
+				"retransIn	(Int, List[inum])"
+			],
+			[
+				"tra",
+				"tranform	(List[inum])"
+			],
+			[
+				"tranf",
+				"tranformIn	(Int, List[inum])"
+			],
+			[
+				"N",
+				"N	"
+			],
+			[
+				"tran",
+				"tranformIn	(List[inum], Int, List[inum])"
+			],
+			[
+				"re",
+				"reverse	"
+			],
+			[
+				"read",
+				"readImpulse	()"
+			],
+			[
+				"br",
+				"br0	"
+			],
+			[
+				"Short",
+				"Short	"
+			],
+			[
+				"Nil",
+				"Nil	"
+			],
+			[
+				"tupl",
+				"tuple	"
+			],
+			[
+				"reduce",
+				"reduceLeft	(Function2[B, Float, B])"
+			],
+			[
+				"prin",
+				"println	(Any)"
+			],
+			[
+				"tois",
+				"toList"
+			],
+			[
+				"listLe",
+				"listLength-1"
+			],
+			[
+				"DataInputStr",
+				"DataInputStream	(InputStream)"
+			],
+			[
+				"Double",
+				"Double	"
+			],
+			[
+				"length",
+				"length	"
+			],
+			[
+				"to",
+				"toByte	"
+			],
+			[
+				"Pri",
+				"PrintWriter	"
+			],
+			[
+				"div",
+				"div"
+			],
+			[
+				"sort",
+				"sortWith	(Function2[DigitalMap, DigitalMap, Boolean])"
+			],
+			[
+				"ori",
+				"origin0	"
+			],
+			[
+				"append",
+				"appendLength	"
+			],
+			[
+				"DIgital",
+				"digitalMap	"
+			],
+			[
+				"Vector",
+				"Vector3	"
+			],
+			[
+				"west",
+				"west	"
+			],
+			[
+				"def",
+				"def	method"
+			],
+			[
+				"getHe",
+				"getHeightPoint	()"
+			],
+			[
+				"setC",
+				"setColor	(Color)"
+			],
+			[
+				"fin",
+				"fineness	"
+			],
+			[
+				"finne",
+				"fineness0	"
+			],
+			[
+				"toSt",
+				"toString	()"
+			],
+			[
+				"draws",
+				"drawString	(String, Int, Int)"
+			],
+			[
+				"get",
+				"getHeightOf	(Vector3)"
+			],
+			[
+				"moutain",
+				"mountain	"
+			],
+			[
+				"sor",
+				"sortWith	(Function2[Mountain, Mountain, Boolean])"
+			],
+			[
+				"max",
+				"max	(Ordering[B])"
+			],
+			[
+				"inLis",
+				"inList0	"
+			],
+			[
+				"ind",
+				"indexOf	(B, Int)"
+			],
+			[
+				"Veco",
+				"Vector3	"
+			],
+			[
+				"mag",
+				"magnitude2	()"
+			],
+			[
+				"o",
+				"o	"
+			],
+			[
+				"diff",
+				"diff	"
+			],
+			[
+				"point",
+				"pointList	"
+			],
+			[
+				"next",
+				"nextHeight	"
+			],
+			[
+				"Con",
+				"Contour	"
+			],
+			[
+				"cont",
+				"contourList	"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 52.0,
+		"selected_items":
+		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"INSTALL",
+				"Package Control: Install Package"
+			],
+			[
+				"package list",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 475.0
+	},
+	"console":
+	{
+		"height": 143.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/apple/Documents/Scala/Sound"
+	],
+	"file_history":
+	[
+		"/Users/apple/Documents/Play/kamasujpweb/conf/twitter4j.properties",
+		"/Users/apple/Documents/Play/kamasujpweb/build.sbt",
+		"/Users/apple/Documents/Play/kamasujpweb/.ensime",
+		"/Users/apple/Documents/Play/kamasujpweb/public/images/$filename",
+		"/Users/apple/Documents/Play/kamasujpweb/public/stylesheets/admin.css",
+		"/Users/apple/Documents/Play/kamasujpweb/public/stylesheets/main.css",
+		"/Users/apple/Documents/Play/kamasujpweb/public/stylesheets/bootstrap.css",
+		"/Users/apple/Documents/Play/kamasujpweb/app/util/Tools/Tools.scala",
+		"/Users/apple/Documents/Play/kamasujpweb/conf/application.conf",
+		"/Users/apple/Documents/Scala/kamasuweb/app/controllers/MainController.scala",
+		"/Users/apple/Documents/Play/kamasujpweb/app/views/newsFormTemplate.scala.html",
+		"/Users/apple/Documents/Play/kamasujpweb/conf/messages",
+		"/Users/apple/Documents/Play/kamasujpweb/app/util/Unit/Type.scala",
+		"/Users/apple/Documents/Scala/kamasuweb/app/views/admin/add_news.scala.html",
+		"/Users/apple/Documents/Scala/worldcreater/build.sbt",
+		"/Users/apple/Documents/Play/kamasujpweb/app/controllers/Application.scala",
+		"/Users/apple/Documents/Scala/kamasuweb/.ensime",
+		"/Users/apple/info/index.php",
+		"/Users/apple/Documents/Eclipse/KobeVote/README.md",
+		"/Users/apple/Documents/Scala/Sound/src/main/scala/Complex.scala",
+		"/Users/apple/Documents/Scala/Sound/.gitignore",
+		"/Users/apple/Documents/Scala/Sound/reader.c",
+		"/Users/apple/Downloads/impulse_44khz.dat",
+		"/Users/apple/Documents/Scala/Sound/impulse.dat",
+		"/Users/apple/Documents/Scala/Sound/impluse.dat",
+		"/Users/apple/Documents/Scala/Sound/src/main/scala/Main.scala",
+		"/Users/apple/Documents/Scala/Sound/hogex.raw",
+		"/Users/apple/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/apple/sin21.raw",
+		"/Users/apple/Documents/Scala/Sound/hoge3.raw",
+		"/Users/apple/Downloads/jump16khz (1).raw",
+		"/Users/apple/Documents/Scala/Sound/hoge2.raw",
+		"/Users/apple/Documents/Play/.ensime",
+		"/Users/apple/Documents/Haskell/HaskellLesson/*REPL* [haskell].hs",
+		"/Users/apple/Documents/Haskell/HaskellLesson/l1.hs",
+		"/Users/apple/Documents/Scala/ScalaLesson/.ensime",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Panel.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/MapCanvas.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Point.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/DigitalMap.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Window.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/World.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/controllers/Application.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Vector3.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/views/getMap.scala.html",
+		"/Users/apple/Documents/Scala/worldcreater/app/views/index.scala.html",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/MapField.scala",
+		"/Users/apple/Documents/Scala/worldcreater/conf/routes",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Util.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Contour.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Mountain.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/Main.scala",
+		"/Users/apple/Documents/Scala/worldcreater/app/util/DigitalMap",
+		"/Users/apple/Documents/Scala/worldcreater/test/IntegrationSpec.scala",
+		"/Users/apple/Documents/Scala/worldcreater/project/target/node-modules/webjars/npm/node_modules/fstream-npm/example/ig-tar.js",
+		"/Users/apple/Documents/Scala/worldcreater/project/target/node-modules/webjars/npm/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.float.js",
+		"/Users/apple/Documents/Scala/worldcreater/.ensime"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/apple/Documents/Scala/worldcreater/app/util"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"input",
+			"1.0",
+			"		\n",
+			"MapField",
+			"println"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"World"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 158.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.haskell_sublime_load":
+	{
+		"height": 110.0
+	},
+	"project": "sound.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 278.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
