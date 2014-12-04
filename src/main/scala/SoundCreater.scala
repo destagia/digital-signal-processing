@@ -69,7 +69,10 @@ class SoundCreater(
 			if (str == null) {
 				res
 			} else {
-				read(br0, res ++ List(str.toFloat))
+				val value = 
+					if (str != "nan") str.toFloat 
+					else 30000
+				read(br0, res ++ List(value))
 			}
 		}
 
