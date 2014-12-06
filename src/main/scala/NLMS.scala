@@ -28,7 +28,7 @@ object NLMS {
 		def for1(k:Int, res:Float):Float = {
 			k match {
 			case 0 => 0.0f
-			case _ => 
+			case _ =>
 				val m = n-k
 				for1(k-1, res + getX(m) * getX(m))
 			}
@@ -58,20 +58,20 @@ object NLMS {
 			}
 			n match {
 				case N => res
-				case _ => 
+				case _ =>
 					val next = for2(0, K, Nil)
 					for1(n+1, N, next, res ++ List(next))
 			}
 		}
 
-		val count:Int = x.size / 3000
+		val count:Int = x.size / 1000
 
 		def makeList(i:Int) {
 			if (i < count) {
 				println(i + " / " + count)
-				h = h ++ for1(0, 3000, h.last, Nil)
+				h = h ++ for1(0, 1000, h.last, Nil)
 				makeList(i + 1)
-			} 
+			}
 		}
 		makeList(0)
 	}
