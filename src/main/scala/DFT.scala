@@ -7,8 +7,16 @@ case class inum(re:Float, im:Float) {
 		sqrt(pow(re,2.0) + pow(im,2.0))
 	}
 
+	def phase = {
+		atan2(re.toDouble, im.toDouble)
+	}
+
 	def *(that:inum):inum = {
 		inum((this.re * that.re) - (this.im * that.im), (this.re * that.im) + (this.im * that.re))
+	}
+
+	def *(that:Double):inum = {
+		inum(this.re/that toFloat, this.im/that toFloat)
 	}
 
 	def +(that:inum):inum = {

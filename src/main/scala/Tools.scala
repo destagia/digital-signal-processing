@@ -33,7 +33,6 @@ object Tools {
 		dos.close()
 	}
 
-
 	def makeFileFromList (name:String, list:List[Float]) {
 		val file = new File(name)
 		val pw = new PrintWriter(new BufferedWriter(new FileWriter(file)))
@@ -46,25 +45,25 @@ object Tools {
 		pw.close()
 	}
 
-	def readFile(fileName:String):List[Float] = {
+	def readFile(fileName:String, limit:Int = 10000000):List[Float] = {
 		val file = new File(fileName)
 		val fr = new FileReader(file)
 		val br = new BufferedReader(fr)
 
-		def read(br0:BufferedReader, res:List[Float]):List[Float] = {
+		def read(br0:BufferedReader, res:List[Float], l:Int):List[Float] = {
 			val str = br0.readLine()
 
-			if (str == null) {
+			if (str == null || l > limit) {
 				res
 			} else {
 				val value = 
 					if (str != "nan") str.toFloat 
 					else 30000
-				read(br0, res ++ List(value))
+				read(br0, res ++ List(value), l+1)
 			}
 		}
 
-		read(br, Nil)
+		read(br, Nil, 0)
 	}
 
 }

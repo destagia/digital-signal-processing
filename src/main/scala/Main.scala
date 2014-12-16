@@ -1,82 +1,39 @@
 package jp.kobe.util
 
 import scala.math._
+import java.io._
 
 object Main {
 
+	implicit def seq2list[A](seq:Seq[A]):List[A] = seq.toList
+
 	def main (args:Array[String]) {
-		/*
-		val sc = new SoundCreater(16000,0.6,6000,500)
+		val sampFreq = 8000
+		val span = 0.032
+		val time = 5
+		val frame_span = sampFreq * span toInt
+		val yall = Tools.readFile("resources/noisy_song.dat", (sampFreq * time).toInt)
 
-		val list1 = sc.makeSound((A, f0, samp_freq, n) => {
-			A * sin(2.0 * Pi * f0 * n / samp_freq)
-		})
-		sc.makeFile("sin.raw", list1)
-
-		val list2 = sc.makeSound((A, f0, samp_freq, n) => {
-			val t0 = 1.0 / f0
-			val maxN = (t0 * samp_freq).toInt
-			val m = (n.toInt % maxN).toDouble
-			if (0 <= m && m < (t0 * samp_freq)/2.0) {
-				A
-			} else if ((t0 * samp_freq)/2.0 <= m && m < t0 * samp_freq) {
-				-A
-			} else {
-				0
+		def makep(l:List[Float]):List[List[Float]] = {
+			l match {
+				case Nil => Nil
+				case _ => l.take(frame_span) :: makep(l.drop(frame_span))
 			}
-		})
-		sc.makeFile("kukeiha.raw", list2)
-
-		val list3 = sc.makeEffectWave(0.2, 0.6, 880, 440)
-		val list5 = sc.fadeOut(list3)
-		sc.makeFile("effect.raw", list5)
-
-		val list4 = sc.foldCalc(list5.map(_.toFloat), sc.readImpulse())
-		sc.makeFile("fold.raw", list4.map(_.toShort))
-
-		val soundCreater = new SoundCreater(44100, 0.5, 6000, 500)
-		
-		val effect = soundCreater.fadeOut(soundCreater.makeEffectWave(0.2, 0.5, 880, 440))
-		val numList = effect.map { a =>
-			inum(a.toFloat, 0.0f)
 		}
 
-		val impulse = soundCreater.readFile("resources/impulse44.dat")
-		
-		val M = numList.size + impulse.size - 1
-		
-		val X = DFT.transform(numList,M)
-		val H = DFT.transform(impulse.map(a => inum(a, 0)),M)
-		val Y = DFT.multiple(X, H)
-		val y = DFT.retransform(Y,M)
-Z
-		soundCreater.makeFile("effect_with_dft.raw", y.map(a => a.re.toShort))
-		val soundCreater = new SoundCreater(12000,0.6,440,880)
-		val filter = soundCreater.readFile("resources/filter.dat")
-		val oto = soundCreater.readFile("resources/oto.dat")
+		val p = makep(yall.take(sampFreq))
+		val P = p.map(pi => DFT.transform(pi.map(f => inum(f, 0)), pi.size).reduceLeft(_ + _))
+		val Pnorm = P.map(_.magnitude).sum / P.size
+		val Y = DFT.transform(yall.map(yi => inum(yi, 0)), yall.size)
 
-		val otoN = oto.size
-		val OTO = DFT.transform(oto.map(x => inum(x, 0)), otoN)	
-		val OTOre = OTO.map(_.re)
-
-		val effect = soundCreater.fadeOut(soundCreater.makeEffectWave(0.2, 0.5, 880, 440))
-		val numList = effect.map { a =>
-			inum(a.toFloat, 0.0f)
+		val S = for (i <- (0 to Y.size-1)) yield {
+			val diff = Y(i).magnitude- Pnorm
+			DFT.expj(Y(i).phase) * (if (diff < 0) 0.01 else diff)
 		}
 
-		val M = filter.size + numList.size - 1
+		val s = DFT.retransform(S, S.size).map(_.magnitude.toFloat)
 
-		val X = DFT.transform(numList,M)
-		// Tools.makeFileFromList("oto_hz.dat", X.map(_.magnitude.toFloat))
-		val H = DFT.transform(filter.map(x => inum(x, 0)), M)
-		
-		val Y = DFT.multiple(X, H)
-		val y = DFT.retransform(Y, M)
-		Tools.makeFileFromList("Y_hz.dat", Y.map(_.magnitude.toFloat))
-		soundCreater.makeFile("y.raw", y.map(_.re.toShort))		
-
-		*/
-		Tools.makeFile("error.raw", NLMS.eList.map(_.toShort))
+		Tools.makeFileFromList("not_noisy.raw", s)
 	}
 }
 

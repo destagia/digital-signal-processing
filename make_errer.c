@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+// バイナリーファイルから配列を作り出す関数
 double *get_list(char *fileName, int *length){
   double check_flag;
   int i, size_impulse;
@@ -31,14 +33,13 @@ double *get_list(char *fileName, int *length){
     exit(EXIT_FAILURE);
   }
 
-  fseek(ifp, 0, SEEK_SET); // You can read the data file again.
+  fseek(ifp, 0, SEEK_SET);
+
   for(i=0;i<size_impulse;i++){
     if (fread(&tmp_f, sizeof(short), 1, ifp) != 1) {
-      // fprintf(stderr, "Error\n");
     	size_impulse--;
     } else {
     	impulse[i] = (double)tmp_f;
-    	// fprintf(stderr, "%d\n", tmp_f);
     }
   }
 
@@ -46,6 +47,7 @@ double *get_list(char *fileName, int *length){
   return impulse;
 }
 
+// 配列からバイナリーファイルを作成する
 void make_file(char *filename, double *data, int length){
 	int n;
 	short tmp;
@@ -64,16 +66,13 @@ void make_file(char *filename, double *data, int length){
 }
 
 int main(void){
-	int K = 100;
+	int K = 80;
 	int sampfreq = 8000;
 	int samptime = 50;
 	int voicetime = 57;
 	int voicelength = 0;
 	int voiceend = sampfreq * 65;
-	double *d;
-	double *x;
-	double *e;
-	double *s;
+	double *d, *x, *e, *s;
 	double *impulse;
 	double **h;
 	double *res1,*res2;
@@ -114,8 +113,6 @@ int main(void){
 		e[n] = d[n] - convolution;
 		convolution = 0;
 
-		// error2sum += e[n] * e[n];
-
 		// 次のフィルタ係数h[n+1]を算出
 		for (k=0;k<K;k++) {
 			X += x[n-k] * x[n-k];
@@ -134,9 +131,7 @@ int main(void){
 			convolution += h[n][k]*x[n-k];
 		}
 		s[n] = d[n] - convolution;
-		// printf("%lf\n", s[n]);
 		convolution = 0;
-		// printf("%lf\n", e[n]);
 	}
 
 	voicelength = voiceend-(voicetime*sampfreq);
@@ -147,8 +142,8 @@ int main(void){
 		res2[n] = s[n+voicetime*sampfreq];
 	}
 
-	make_file("only_voice.raw", res2, voicelength);
-	make_file("song_voice.raw", res1, voicelength);
+	// make_file("only_voice.raw", res2, voicelength);
+	// make_file("song_voice.raw", res1, voicelength);
 
 	for(k=0;k<K;k++){
 		// printf("%lf\n", h[3*sampfreq][k]);
@@ -156,32 +151,7 @@ int main(void){
 		// printf("%lf\n", impulse[k]);
 	}
 
-
 	// make_file("error80.raw", e, length);
 	// printf("%lf\n", error2sum / length);
 	return EXIT_SUCCESS;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

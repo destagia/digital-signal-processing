@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 
   fseek(ifp, 0, SEEK_SET); // You can read the data file again.
 
-  for(i=220000;i<size_impulse;i++){
+  for(i=0;i<size_impulse;i++){
     if (fread(&tmp_f, sizeof(float), 1, ifp) != 1) {
       fprintf(stderr, "Error\n");
     }
