@@ -16,7 +16,6 @@ object Main extends App{
 	// データを読み込む
 	val yall = Tools.readFile("resources/noisy_song.dat", (sampFreq * time).toInt)
 	println("[dsp] finished reading file.")
-	val K = yall.size
 
 	// frame_span区切りのリストのリストを作成する
 	def makep[A](l:List[A]):List[List[A]] = l match {
@@ -27,39 +26,52 @@ object Main extends App{
 	}
 
 	val y = makep[Float](yall)
+	var count = -1
 	val Y = y.map { yi =>
-		DFT.transform(yi, K)
+		count += 1
+		DFT.transform(yi, count*frame_span, frame_span)
 	}
+
+	/*
+	count = -1
+	val yr = Y.map { 
+		count += 1
+		Yi => DFT.retransform(Yi, count*frame_span, frame_span)
+	}.reduceLeft(_ ++ _)
+	Tools.makeFile("rey.raw", yr.map(_.re.toShort))
+	*/
 	//val Y = DFT.transform(yall.map(yi => inum(yi, 0)), yall.size)
 	println("[dsp] calculated Y from y. " + Y.size + ", " + y.size)
 
-	val p = y.head // 音声リストから１秒分とってくる
-	println("[dsp] finsihed make p list.")	
-	println(p)
+	val P = for(k <- (0 to frame_span-1)) 
+				yield Y.take(31).map(Yl => Yl(k).magnitude).sum / 31.0f
 
-	val P = DFT.transform(p, K)
-	println("[dsp] made P.")
-
-	def Pnorm(k:Int) = Y.take(31).map(Yl => Yl(k).magnitude).sum / 31.0f
+	println(P)
 
 	val S = for (Yl <- Y) yield {
 		for (omega  <- (0 to Yl.size-1)) yield {
-			val diff = Yl(omega).magnitude - Pnorm(omega)
-			DFT.expj(Yl(omega).phase) * (if (diff < 0) Yl(omega).magnitude*0.01 else diff)
+			val diff = Yl(omega).magnitude - P(omega)
+			println(diff)
+			val r = DFT.expj(Yl(omega).phase) * (if (diff < 0) Yl(omega).magnitude*0.01 else diff)
+			inum(r.im, r.re)
 		}
 	}
 	println("[dsp] calculated S from y and P. " + S.size)
-	// S.map(println) 
+	S.map(println) 
 	// val s = DFT.retransform(S, S.size).map(_.magnitude.toFloat)
+	count = -1
 	val s = S.map { Si => 
-		DFT.retransform(Si, K)
-	}.reduceLeft(_ ++ _).map(_.re.toShort)
+		count += 1
+		DFT.retransform(Si, count*frame_span, frame_span)
+	}.reduceLeft(_ ++ _)
 
 	println("[dsp] retransformed s from S. " + s.size)
+	s.foreach { si =>
+		println(si.re)
+	}
 
-	Tools.makeFile("not_noisy.raw", s)
+	Tools.makeFile("not_noisy_final.raw", s.map(_.re.toShort))
 }
-
 
 
 

@@ -16,7 +16,7 @@ case class inum(re:Float, im:Float) {
 	}
 
 	def *(that:Double):inum = {
-		inum(this.re/that toFloat, this.im/that toFloat)
+		inum(this.re*that toFloat, this.im*that toFloat)
 	}
 
 	def +(that:inum):inum = {
@@ -39,7 +39,7 @@ object DFT {
 		inum(cos(N).toFloat,sin(N).toFloat)
 	}
 
-	def transform (x:List[inum], N:Double):List[inum] = {
+	def transform (x:List[inum],M:Double, N:Double):List[inum] = {
 		def transformIn(n:Int, res:List[inum]):List[inum] = {
 			def calc (x1:List[inum], m:Int, res1:inum):inum = {
 				if (x1.isEmpty) {
@@ -53,13 +53,13 @@ object DFT {
 			if (n >= N) {
 				res
 			} else {
-				transformIn(n+1, res ++ List(calc(x, 0, inum(0, 0))))
+				transformIn(n+1, res ++ List(calc(x, M.toInt, inum(0, 0))))
 			}
 		}
 		transformIn(0, Nil)
 	}
 
-	def retransform (X:List[inum], N:Double):List[inum] = {
+	def retransform (X:List[inum], M:Double, N:Double):List[inum] = {
 		def retransIn(n:Int, res:List[inum]):List[inum] = {
 			def calc(x1:List[inum], m:Int, res1:inum):inum = {
 				if (x1.isEmpty) {
@@ -73,7 +73,7 @@ object DFT {
 			if (n >= N) {
 				res
 			} else {
-				retransIn(n+1, res ++ List(calc(X, 0, inum(0,0)) / N.toFloat))
+				retransIn(n+1, res ++ List(calc(X, M.toInt, inum(0,0)) / N.toFloat))
 			}
 		}
 		retransIn(0, Nil)
