@@ -45,6 +45,24 @@ object Tools {
 		pw.close()
 	}
 
+	def readBinary(fileName:String):List[Short] = {
+		val inputFile = new File(fileName)
+		val fis = new FileInputStream(inputFile)
+		val dis = new DataInputStream(fis)
+		var list = List[Short]()
+
+		try {
+			while (true) {
+				val next = fetch(dis.readShort())
+				list = List(next) ++ list
+			}
+		} catch {
+			case e:EOFException => 
+		}
+
+		list.reverse
+	}
+
 	def readFile(fileName:String, limit:Int = 10000000):List[Float] = {
 		val file = new File(fileName)
 		val fr = new FileReader(file)

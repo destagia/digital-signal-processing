@@ -39,8 +39,8 @@ int main(int argc, char **argv){
     }
     impulse[i] = tmp_f;
     fprintf(stderr, "%d\n", tmp_f);
-    printf("%d\n", tmp_f);
+    // printf("%d\n", tmp_f);
   }
-
+  // printf("%d\n", size_impulse);
   return EXIT_SUCCESS;
 }

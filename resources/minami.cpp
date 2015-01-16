@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]){
  
    //ファイルの準備
  
-   if((in_file=fopen("noisy_song.raw", "rb"))== NULL){
+   if((in_file=fopen("./../resources/7/all_sounds.raw", "rb"))== NULL){
        printf("open error0¥n");
        return -1;
    }
@@ -65,7 +65,7 @@ int main(int argc, const char * argv[]){
    while (fread(&dummy_s, sizeof(short), 1, in_file))
        length++;
        
-    fseek(in_file, 0L, SEEK_SET);
+   fseek(in_file, 0L, SEEK_SET);
  
    y = new complex<double>[length];
    Y = new complex<double>[length];

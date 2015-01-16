@@ -4,7 +4,7 @@ import scala.math._
 import java.io._
 
 object Main extends App{
-
+	/*
 	implicit def seq2list[A](seq:Seq[A]):List[A] = seq.toList
 	implicit def floatlist2inumlist(list:List[Float]):List[inum] = list.map(a => inum(a, 0))
 
@@ -71,6 +71,8 @@ object Main extends App{
 	}
 
 	Tools.makeFile("not_noisy_final.raw", s.map(_.re.toShort))
+	*/
+	val annotation = new ScaleAnnotation("em_chord.raw")
 }
 
 
