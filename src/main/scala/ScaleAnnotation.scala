@@ -3,8 +3,9 @@ package jp.kobe.util
 import java.util.Random
 import scala.math._
 
-class ScaleAnnotation(name:String) {
+class ScaleAnnotation(name:String, count:Int) {
 	implicit def Short2Float(s:Short):Float = s.toFloat
+	implicit def Double2Float(d:Double):Float = d.toFloat
 	implicit def Vector2List[A](v:Vector[A]):List[A] = v.toList
 
 	println("[dsp] init Scale Annotation")
@@ -16,92 +17,117 @@ class ScaleAnnotation(name:String) {
 
 	val all_sounds = Tools.readBinary("resources/7/all_sounds.raw")
 	println("[dsp] load all_sounds.raw")
-	// all_sounds.map(println(_))
+
 	val data = Tools.readBinary("resources/7/" + name)
-	// data.map(println(_))
-	// println(data.size)
 	println("[dsp] load " + name)
-	Tools.makeFile("re_em_chord.raw", data)
 
 	val I = samp_freq * frame_rate toInt       // 行列Xの行数
 	val J = (data.size / I).toInt                // 行列Xの列数
 	println("[dsp] I : " + I + " J : " + J)
+
 	// frame_span区切りのリストのリストを作成する
-	def makeShortTimeList[A](l:List[A]):List[List[A]] = l match {
+	def makeShortTimeList[A](l:List[A], res:List[List[A]]):List[List[A]] = l match {
 		case Nil => Nil
 		case _ => 
-			if (l.length >= frame_span) l.take(frame_span) :: makeShortTimeList[A](l.drop(frame_span))
-			else Nil
+			if (l.length >= frame_span) makeShortTimeList[A](l.drop(frame_span), res ++ List(l.take(frame_span)))
+			else res
 	}
 	println("[dsp] divide list for short DFT")
 
-	val XT = makeShortTimeList(data).par.map { x => 
-		DFT.transform(x.map(x => inum(abs(x), 0)), x.size, frame_span).toArray
+	// 各値に対して，DFTを行う。
+	val XT = makeShortTimeList(data, Nil).par.map { x => 
+		DFT.transform(x.map(y => inum(y, 0)), 1, frame_span).par.map(_.magnitude.toFloat).toArray
 	}.toArray
 
-	val WT = makeShortTimeList(all_sounds).par.map { x => 
-		DFT.transform(x.map(inum(_, 0)), x.size, frame_span).toArray
+	val WT = makeShortTimeList(all_sounds, Nil).par.map { x => 
+		DFT.transform(x.map(y => inum(y, 0)), 1, frame_span).par.map(_.magnitude.toFloat).toArray
 	}.toArray
 
 	println("XT = (" + XT.size + "x" + XT(0).size + ")")
 	println("WT = (" + WT.size + "x" + WT(0).size + ")")
 
-	val K = WT.size    // Wの列数 または Hの行数
+	val K = WT.size          // Wの列数 または Hの行数
+	val sound_span = K/18    // 音階1つのフレームの長さ(W行列の列数ともいえる) 
 
+	println("[dsp] K : " + K + ", sound_span : " + sound_span)
 	val H0 = (for (k <- (0 to K-1)) yield {     // 0~1の小数の乱数が入ったHの適当な初期値
 		(for (j <- (0 to J-1)) yield {
 			random.nextFloat() * 0.1f
 		}).toArray
 	}).toArray
+
 	println("[dsp] made H0 list")
-	
-	def calcH(H:Array[Array[Float]], times:Int):Array[Array[Float]] = {
+	println("[dsp] calclating H ..")
+	def calcH(H:Array[Array[Float]], times:Int):(Array[Array[Float]], List[Float]) = {
+		val ratio = ((1.0f - times.toFloat / count.toFloat) * 100).toInt
+		print("\r")
+		print("[" + (0 until 100).map(x => if (x < ratio) "#" else " ").reduceLeft(_ + _) + "]")
+
+		// WH行列はW行列とH行列の積なので，あらかじめ計算しておく
 		val WH = 
-		(for (i <- (0 to I-1)) yield { 
-			(for (j <- (0 to J-1)) yield {
-				(for (k <- (0 to K-1)) yield {
-					WT(k)(i).re * H(k)(j)
-				}).toList.sum
-			}).toArray
-		}).toArray
+		(0 to I-1).par.map { i =>
+			(0 to J-1).par.map { j =>
+				(0 to K-1).par.map { k =>
+					WT(k)(i) * H(k)(j)
+				}.sum
+			}.toArray
+		}.toArray
 
-		val nextH = (for (a <- (0 to K-1)) yield {
-			(for (u <- (0 to J-1)) yield {
+		// 次のHを計算する
+		val nextH = (0 to K-1).par.map { a =>
+			(0 to J-1).par.map { u =>
 
-				var sum1 = inum(0,0)
-				for (i <- (0 to I-1)) {
-					sum1 += WT(a)(i) * XT(u)(i) / WH(i)(u)
-				}
+				var sum1 = 
+				(0 to I-1).par.map { i =>
+					WT(a)(i) * XT(u)(i) / WH(i)(u)
+				}.sum
 
-				var sum2 = 0.0f
-				for (k <- (0 to I-1)) {
-					sum2 += WT(a)(k).re
-				}
+				var sum2 = 
+				(0 to I-1).par.map { k =>
+					WT(a)(k)
+				}.sum
 
-				val el = H(a)(u) * sum1.re / sum2
+				val el = H(a)(u) * sum1 / sum2
 				if (el >= 0) el
 				else 0
-			}).toArray
-		}).toArray
+
+			}.toArray
+		}.toArray
+
+		// KL情報量の計算
+		val D:Float =
+		(0 until I).par.map { i =>
+			(0 until J).par.map { j => 
+				val value:Float = XT(j)(i) * log(XT(j)(i).toDouble / (WH(i)(j).toDouble)) - XT(j)(i) + WH(i)(j)
+				if (value.isNaN) 0
+				else value
+			}.sum
+		}.sum
 
 		times match {
-			case 1 => nextH
-			case _ => calcH(nextH, times-1)
+			case 1 => (nextH, Nil)
+			case _ => 
+				val (h, d) = calcH(nextH, times-1)
+				(h, List(D) ++ d)
 		}
 	}
-	val H = calcH(H0, 10)
-	println("H = (" + H.size + "x" + H.head.size + ")")
+	val res = calcH(H0, count)
+	val H = res._1
+	val D = res._2
+
+
+	Tools.makeFileFromList("KL.dat", D)
 	
-	for (a <- (0 to (K/J).toInt-1)) yield {
+	// すべての音階に対して，データを作成
+	for (a <- (0 to 17)) yield {
 		val sound = for (j <- (0 to J-1)) yield {
-			var sum = 0.0f
-			val point = a * J
-			for (b <- (point to point+52)) {
-				sum += H(b)(j)
-			}
-			sum
+			val point = a * sound_span
+			(point until point+sound_span).map { b =>
+				H(b)(j)
+			}.sum
+
 		}	
-		// Tools.makeFileFromList(a + "_sound.dat", sound.toList)
+		Tools.makeFileFromList(a + "_sound.dat", sound.toList)
 	}
 	
 

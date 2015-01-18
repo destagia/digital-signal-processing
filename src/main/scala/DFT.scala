@@ -23,6 +23,10 @@ case class inum(re:Float, im:Float) {
 		inum(this.re + that.re, this.im + that.im)
 	}
 
+	def -(that:inum):inum = {
+		inum(this.re - that.re, this.im - that.im)
+	}
+
 	def /(that:Float):inum = {
 		inum(this.re/that, this.im/that)
 	}
@@ -40,6 +44,7 @@ object DFT {
 	}
 
 	def transform (x:List[inum],M:Double, N:Double):List[inum] = {
+
 		def transformIn(n:Int, res:List[inum]):List[inum] = {
 			def calc (x1:List[inum], m:Int, res1:inum):inum = {
 				if (x1.isEmpty) {

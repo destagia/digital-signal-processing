@@ -38,7 +38,7 @@ object Tools {
 		val pw = new PrintWriter(new BufferedWriter(new FileWriter(file)))
 		var count = 0
 		for (f <- list) {
-			println(f)
+			// println(f)
 			pw.println(f)
 			count += 1
 		}
